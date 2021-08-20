@@ -1,0 +1,79 @@
+\documentclass[10pt]{article}
+
+\usepackage[left=0.4in,right=0.4in,top=0.7in,bottom=0.4in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fontawesome5}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{latexsym}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{tocloft}
+\usepackage{tikz}
+\input{glyphtounicode}
+
+\renewcommand*{\ttdefault}{pcr}
+\renewcommand\cftsecfont{\fontsize{8}{9}\bfseries}
+\renewcommand\cftsecpagefont{\fontsize{8}{9}\mdseries}
+\renewcommand\cftsubsecfont{\fontsize{5}{6}\mdseries}
+\renewcommand\cftsubsecpagefont{\fontsize{5}{6}\mdseries}
+\renewcommand\cftsecafterpnum{\vspace{-1ex}}
+\renewcommand\cftsubsecafterpnum{\vspace{-1ex}}
+
+\lstdefinestyle{cpp}{
+  language=C++,
+  tabsize=2,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\fontsize{5.5}{6}\ttfamily,
+  numbers=left,
+  numberstyle=\tiny\color{black},
+  numbersep=6pt,
+  showspaces=false,
+  otherkeywords={size, front, back, push, cin, cout, endl, pop, queue, stack, sizeof, memset, pop_back, push_back, emplace, emplace_back},
+  keywordstyle=\bfseries\color{Blue},
+  commentstyle=\itshape\color{RoyalPurple},
+  identifierstyle=\color{BrickRed},
+  stringstyle=\color{OliveGreen},
+}
+
+\lstset{escapechar=@}
+
+\pagestyle{fancy}
+\fancyhead[L]{Al-Azhar University}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+
+\fancypagestyle{plain}
+{
+  \fancyhead[L]{Al-Azhar University}
+  \fancyhead[R]{\thepage}
+  \fancyfoot[C]{}
+}
+
+\title{\vspace{-4ex}\Large{Elite Squad Team Reference Material}}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{landscape}
+  \begin{multicols}{2}
+
+    \maketitle
+    \vspace{-13ex}
+    \tableofcontents
+    \pagestyle{fancy}
+    \input sections.tex
+
+  \end{multicols}
+\end{landscape}
+
+\end{document}
