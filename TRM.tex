@@ -37,10 +37,36 @@
   numberstyle=\tiny\color{black},
   numbersep=6pt,
   showspaces=false,
-  otherkeywords={size, front, back, push, cin, cout, endl, pop, queue, stack, sizeof, memset, pop_back, push_back, emplace, emplace_back},
+  otherkeywords={size, front, back, push, cin, cout, endl, pop, queue, stack, sizeof, memset},
   keywordstyle=\bfseries\color{Blue},
   commentstyle=\itshape\color{RoyalPurple},
-  identifierstyle=\color{BrickRed},
+  identifierstyle=\color{Black},
+  stringstyle=\color{OliveGreen},
+}
+
+\lstdefinelanguage{vim}
+{
+  % list of keywords
+  morekeywords={ set, let, map, nmap, filetype, on, off, autocmd, call, syntax, vmap, <leader>, keycode, clear, xmodmap, setxkbmap, g++},
+  morecomment=[l]{\#}, % l is for line comment
+  morestring=[b]' % defines that strings are enclosed in double quotes
+}
+
+\lstdefinestyle{vim}{
+  language=vim,
+  tabsize=2,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\fontsize{5.5}{6}\ttfamily,
+  numbers=left,
+  numberstyle=\tiny\color{black},
+  numbersep=6pt,
+  showspaces=false,
+  keywordstyle=\bfseries\color{PineGreen},
+  commentstyle=\itshape\color{JungleGreen},
+  identifierstyle=\color{Orchid},
   stringstyle=\color{OliveGreen},
 }
 
