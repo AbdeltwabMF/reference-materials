@@ -1,0 +1,51 @@
+\lstdefinestyle{shared} {
+  tabsize=2,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\fontsize{5.5}{6}\ttfamily,
+  numbers=left,
+  numberstyle=\tiny\color{black},
+  numbersep=6pt,
+  showspaces=false,
+}
+
+\lstdefinestyle{cpp} {
+  style=shared,
+  language=C++,
+  otherkeywords={size, front, back, cin, cout, endl, sizeof, memset},
+  keywordstyle=\bfseries\color{Blue},
+  commentstyle=\itshape\color{RoyalPurple},
+  identifierstyle=\color{Black},
+  stringstyle=\color{OliveGreen},
+}
+
+\lstdefinelanguage{all} {
+  % list of keywords
+  morekeywords={ set, let, map, nmap, filetype, on, off, autocmd, call, syntax, vmap, <leader>, keycode, clear, xmodmap, setxkbmap},
+  morecomment=[l]{\#}, % l is for line comment
+  morestring=[b]' % defines that strings are enclosed in double quotes
+}
+
+\lstdefinestyle{others} {
+  style=shared,
+  language=all,
+  keywordstyle=\bfseries\color{PineGreen},
+  commentstyle=\itshape\color{JungleGreen},
+  identifierstyle=\color{Orchid},
+  stringstyle=\color{OliveGreen},
+}
+
+\lstset{escapechar=@}
+
+\pagestyle{fancy}
+\fancyhead[L]{Al-Azhar University}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+
+\fancypagestyle{plain} {
+  \fancyhead[L]{Al-Azhar University}
+  \fancyhead[R]{\thepage}
+  \fancyfoot[C]{}
+}

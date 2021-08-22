@@ -1,0 +1,6 @@
+#!/bin/bash
+# put this file in .local/bin or add its dir to the PATH variable
+compile() {
+  g++ -Wall -Wextra -Wshadow -Ofast -std=c++17 -pedantic -Wformat=2 -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wfloat-equal -fno-sanitize-recover -fstack-protector -fsanitize=address,undefined -fmax-errors=2 -o "$1"{,.cpp}
+}
+compile "$1"
