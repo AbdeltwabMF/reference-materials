@@ -1,18 +1,3 @@
-#pragma GCC optimize("Ofast")
-
-#include <bits/stdc++.h>
-
-#define endl    '\n'
-
-using namespace std;
-
-typedef int64_t  ll;
-
-void Fast() {
-    cin.sync_with_stdio(0);
-    cin.tie(0);cout.tie(0);
-}
-
 const int dr []     = {-1, 0, 1, 0};
 const int dc []     = {0, 1, 0, -1};
 const char dir []   = {'U', 'R', 'D', 'L'};
@@ -27,105 +12,97 @@ char Par[N][N];
 
 vector < pair <int, int> > restorePath(int sr, int sc, int tr, int tc)
 {
-    vector < pair <int, int> > ret;
-    if(dis[tr][tc] == oo) return ret;
+  vector < pair <int, int> > ret;
+  if(dis[tr][tc] == oo) return ret;
 
-    for(char i = Par[tr][tc]; (sr ^ tr) || (sc ^ tc); i = Par[tr][tc])
+  for(char i = Par[tr][tc]; (sr ^ tr) || (sc ^ tc); i = Par[tr][tc])
     {
-        ret.push_back({tr, tc});
-        tr += dr[inv[i]];
-        tc += dc[inv[i]];
+      ret.push_back({tr, tc});
+      tr += dr[inv[i]];
+      tc += dc[inv[i]];
     }
 
-    ret.push_back({sr, sc});
-    reverse(ret.begin(), ret.end());
-    return ret;
+  ret.push_back({sr, sc});
+  reverse(ret.begin(), ret.end());
+  return ret;
 }
 
 bool valid(int r, int c) {
-    return r >= 0 && r < n && c >= 0 && c < m && grid[r][c] != '%';
+  return r >= 0 && r < n && c >= 0 && c < m && grid[r][c] != '%';
 }
 
 /** admissible heuristic **/
 int manhattanDistance(int x1, int y1, int x2, int y2) {
-    return (abs(x1 - x2) + abs(y1 - y2));
+  return (abs(x1 - x2) + abs(y1 - y2));
 }
 
 int Astar(int sr, int sc, int tr, int tc)
 {
-    memset(dis, 0x3f, sizeof (dis));
-    memset(Par,   -1, sizeof (Par));
+  memset(dis, 0x3f, sizeof (dis));
+  memset(Par,   -1, sizeof (Par));
 
-    priority_queue <tuple <int, int, int> > Q;
+  priority_queue <tuple <int, int, int> > Q;
 
-    dis[sr][sc] = 0;
-    Q.push({-manhattanDistance(sr, sc, tr, tc), sr, sc});
+  dis[sr][sc] = 0;
+  Q.push({-manhattanDistance(sr, sc, tr, tc), sr, sc});
 
-    int hcost, r, c, nr, nc;
-    while(Q.size())
+  int hcost, r, c, nr, nc;
+  while(Q.size())
     {
-        tie(hcost, r, c) = Q.top(); Q.pop();
-        if(r == tr && c == tc) return dis[r][c];
+      tie(hcost, r, c) = Q.top(); Q.pop();
+      if(r == tr && c == tc) return dis[r][c];
 
-        for(int i = 0; i < 4; ++i)
+      for(int i = 0; i < 4; ++i)
         {
-            nr = r + dr[i];
-            nc = c + dc[i];
+	  nr = r + dr[i];
+	  nc = c + dc[i];
 
-            if(!valid(nr, nc)) continue;
+	  if(!valid(nr, nc)) continue;
 
-            if(dis[r][c] + 1 < dis[nr][nc])
+	  if(dis[r][c] + 1 < dis[nr][nc])
             {
-                dis[nr][nc] = dis[r][c] + 1;
-                Par[nr][nc] = dir[i ^ 2];
-                Q.push({-dis[nr][nc] -manhattanDistance(nr, nc, tr, tc), nr, nc});
+	      dis[nr][nc] = dis[r][c] + 1;
+	      Par[nr][nc] = dir[i ^ 2];
+	      Q.push({-dis[nr][nc] -manhattanDistance(nr, nc, tr, tc), nr, nc});
             }
         }
     }
-    return -1;
+  return -1;
 }
 
 void Solve()
 {
-    Fast();
+  cin >> si >> sj >> ti >> tj >> n >> m;
 
-    cin >> si >> sj >> ti >> tj >> n >> m;
+  for(int i = 0; i < n; ++i)
+    for(int j = 0; j < m; ++j)
+      cin >> grid[i][j];
 
-    for(int i = 0; i < n; ++i)
-        for(int j = 0; j < m; ++j)
-            cin >> grid[i][j];
+  cout << Astar(si, sj, ti, tj) << endl;
+  vector < pair <int, int> > path = restorePath(si, sj, ti, tj);
 
-    cout << Astar(si, sj, ti, tj) << endl;
-    vector < pair <int, int> > path = restorePath(si, sj, ti, tj);
-
-    for(auto point : path)
-        cout << point.first << " " << point.second << endl;
-}
-
-int main()
-{
-    int t = 1;
-    while(t--) Solve();
+  for(auto point : path)
+    cout << point.first << " " << point.second << endl;
 }
 
 /**
-    P -> strat
-    . -> target
+   P -> strat
+   . -> target
 
-    input:
-    0 2 2 3 5 5
-    %%P%-
-    -%---
-    %--.-
-    %%%%%
-    -----
+   input:
+   0 2 2 3 5 5
+   %%P%-
+   -%---
+   %--.-
+   %%%%%
+   -----
 
-    output:
-    3
-    0 2
-    1 2
-    2 2
-    2 3
+   output:
+   3
+   0 2
+   1 2
+   2 2
+   2 3
 
 **/
 

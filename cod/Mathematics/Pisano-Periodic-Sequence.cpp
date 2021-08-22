@@ -174,6 +174,8 @@ void initialize()
 }
 
 void Solve() {
+  initialize();
+  
   cin >> n;
   vector < array <ll, 2> > factors = factorize(n);
 
@@ -182,16 +184,4 @@ void Solve() {
     ans = lcm(ans, (i128)pisano_prime(factors[i][0]) * ModExp(factors[i][0], factors[i][1] - 1));
   }
   cout << ans << endl;
-}
-
-void MultiTest(bool Tests)
-{
-  int tc = 1; (Tests) && (cin >> tc);
-  for(int i = 1; i <= tc; ++i)
-    Solve();
-}
-
-int main()
-{
-  Fast(); initialize(); MultiTest(1);
 }
