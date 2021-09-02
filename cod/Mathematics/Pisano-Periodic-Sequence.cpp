@@ -1,3 +1,115 @@
+/** Algorithm 1: **/
+
+/** Constraints :
+    1 <= n <= CR
+    Where CR stands for your computing resources. In my case,
+    CR = 100,000,000
+    ----------------
+    The algorithm is constructed around the ideas that a Pisano sequence always starts with 0 and 1, and that this sequence of Fibonacci
+    numbers taken modulo n can be constructed for each number by adding the previous remainders and taking into account the modulo n.
+    ----------------
+
+    definition:
+    The sequence of Fibonacci numbers {F_n} is periodic modulo any modulus m (Wall 1960), and the period (mod m)
+    is the known as the Pisano period pi(m) (Wrench 1969). For m=1, 2, ..., the values of pi(m) are
+    1, 3, 8, 6, 20, 24, 16, 12, 24, 60, 10, ... (OEIS A001175).
+
+    Since pi(10)=60, the last digit of F_n repeats with period 60, as first noted by Lagrange in 1774 (Livio 2002, p. 105).
+    The last two digits repeat with a period of 300, and the last three with a period of 1500.
+    In 1963, Geller found that the last four digits have a period of 15000 and the last five a period of 150000.
+    Jarden subsequently showed that for d>=3, the last d digits have a period of 15*10^(d minus 1) (Livio 2002, pp. 105-106).
+    The sequence of Pisano periods for n=1, 10, 100, 1000, ... are therefore 60, 300, 1500, 15000, 150000, 1500000, ... (OEIS A096363).
+    pi(m) is even if m>2 (Wall 1960). pi(m)=m iff m=24*5^(k-1) for some integer k>1 (Fulton and Morris 1969, Wrench 1969).
+
+    resources :
+    1. https://webbox.lafayette.edu/~reiterc/nt/qr_fib_ec_preprint.pdf
+    2. https://www.youtube.com/watch?v=Nu-lW-Ifyec&ab_channel=Numberphile
+    4. http://webspace.ship.edu/msrenault/fibonacci/fib.htm
+    5. https://www.theoremoftheday.org/Binomial/PeriodicFib/TotDPeriodic.pdf
+    7. http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibmaths.html#fibmod
+    8. http://webspace.ship.edu/msrenault/fibonacci/FibThesis.pdf
+    9. https://www.fq.math.ca/Scanned/1-2/vinson.pdf
+**/
+
+vector <int> pisano_periodic_sequence(int n) {
+  vector <int> period;
+
+  int current = 0, next = 1;
+  period.push_back(current);
+
+  if(n < 2) return period;
+  current = (next += current) - current;
+
+  while(current != 0 || next != 1) {
+    period.push_back(current);
+    current = current + next >= n ? (next += current - n) + (n - current) : (next += current) - current;
+  }
+  return period;
+}
+
+/** ************************************************************************************** **/
+/** Algorithm 2: **/
+
+/**	constraints:
+	1 <= n <= 10^{18}
+	--------------
+	problem statement (https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4479):
+	For any integer n, the sequence of Fibonacci numbers F_i taken mod n is periodic.
+	define K(n) = the length of the period of the Fibonacci sequence reduced mod n.
+	The task is to print the length of the period of this sequence K(n).
+	--------------
+	Definition:
+	The Pisano period  pi(n)  is a multiplicative function, that is if  a  and  b  are coprime than  pi(ab) = pi(a) * pi(b).
+	So we need only concern ourselves with the value of  pi(p^k) for prime  p.
+	(Factoring even a large number is still better than brute force periodicity search.)
+
+	It is hypothesized that  p(p^k) = p^{k - 1} * pi(p) and since no counterexamples are known to exist,
+	you might as well use that in your algorithm.
+
+	So, how to calculate  pi(p)  efficiently? There are two special cases and two general cases
+
+	pi(2^k) = 3*2^{k - 1}
+	pi(5^k) = 4*5^k
+
+	If  p cong 1  or  p cong 9 (mod10)  then  pi(p) | p - 1
+	If  p cong 3  or  p cong 7 (mod10)  then  pi(p) | 2 * (p + 1) , and by an odd divisor too.
+
+	The last two statements give us a relatively small number of cases to try (after factoring  p - 1  or  2*(p + 1) .)
+	Now use your favorite formula to calculate large values of the Fibonacci numbers  F(x) (mod p).
+	[See Michal answer to What is a fast algorithm to find the remainder of the division of a huge Fibonacci number by some big integer?](https://www.quora.com/Whats-a-fast-algorithm-to-find-the-remainder-of-the-division-of-a-huge-Fibonacci-number-by-some-big-integer/answer/Michal-Fori%C5%A1ek) .
+	To test a candidate period  R , calculate  F(R) (mod p)  and  F(R + 1) (mod p).
+	If these are equal to  F(0) = 0  and  F(1) = 1 , then  pi(p) | R.
+
+	It might be that  p - 1  or  2*(p + 1)  have a lot of divisors, but we dont need to try them all.
+	Suppose  q^k | R  for some prime q.
+	Then test  R/q . If that doesnt produce a cycle, then  pi(p)  must have factor  q^k ,
+	and we can leave it in and go on to other factors.
+	Otherwise, we can use  R/q  as our new starting point and repeat the process.
+	Thus we have to do a number of checks proportional to  Omega(2*(p + 1)) , not  d(2*(p + 1)).
+
+	------------
+	Donald Wall proved several other properties, some of which you may find interesting:
+	 If m > 2, k(m) is even.
+	 For any even integer n > 2, there exists m such that k(m) = n.
+	 k(m) <= (m^2) - 1
+	 k(2^n) = 3 * 2^{n - 1}
+	 k(5^n) = 4 * 5^n
+	 If n > 2, k(10^n) = 15 * 10^{n - 1}
+	 k(2 * 5^n) = 6n
+**/
+
+#pragma  GCC optimize ("Ofast")
+
+#include <bits/stdc++.h>
+
+#define endl        '\n'
+
+using namespace std;
+
+typedef long long     ll;
+typedef __int128    i128;
+typedef __int128_t ui128;
+
 template <class T>
 using matrix = vector < vector <T> >;
 
@@ -175,7 +287,6 @@ void initialize()
 
 void Solve() {
   initialize();
-  
   cin >> n;
   vector < array <ll, 2> > factors = factorize(n);
 

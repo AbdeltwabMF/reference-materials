@@ -1,5 +1,20 @@
-class point
-{
+/**
+   notes:
+   EPS = 1e-9
+   ------------------------------------
+   Integers   |       Doubles         |
+   ------------------------------------
+   a == b    | fabs(a - b) < EPS     |
+   a <= b    | a < b + EPS           |
+   a >= b    | a + EPS > b           |
+   a < b     | a + EPS < b           |
+   a > b     | a > b + EPS           |
+   x >= 0.0   | x > -EPS              |
+   x <= 0.0   | x < EPS               |
+   -----------------------------------
+**/
+
+class point {
 public :
   ld x, y;
 

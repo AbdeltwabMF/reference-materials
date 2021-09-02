@@ -1,9 +1,19 @@
+const int N = 1e5 + 9, M = 2e6 + 9, oo = 0x3f3f3f3f, Mod = 1e9 + 7;
+ll INF = 0x3f3f3f3f3f3f3f3f;
+
 int Head[N], To[M], Next[M], Cost[M];
 int dfs_num[N], dfs_low[N];
 int Stack[N], compID[N], compSize[N];
 int ne, n, m, u, v, w;
 int dfs_timer, top, ID;
 bool in_stack[N];
+
+void addEdge(int from, int to, int cost = 0) {
+  Next[++ne] = Head[from];
+  Head[from] = ne;
+  Cost[ne] = cost;
+  To[ne] = to;
+}
 
 void _clear() {
   memset(Head,     0, sizeof(Head[0])     * (n + 2));
@@ -13,8 +23,7 @@ void _clear() {
   ne = dfs_timer = top = ID = 0;
 }
 
-void Tarjan(int node)
-{
+void Tarjan(int node) {
   dfs_num[node] = dfs_low[node] = ++dfs_timer;
   in_stack[Stack[top++] = node] = true;
 
@@ -37,7 +46,8 @@ void Tarjan(int node)
 }
 
 void Tarjan() {
-  for(int i = 1; i <= n; ++i) if(dfs_num[i] == 0)
-				Tarjan(i);
+  for(int i = 1; i <= n; ++i)
+    if(dfs_num[i] == 0)
+      Tarjan(i);
 }
 

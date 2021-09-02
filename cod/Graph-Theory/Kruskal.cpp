@@ -1,24 +1,3 @@
-/**
-   Maintain a set of elements partitioned into non-overlapping subsets. Each
-   partition is assigned a unique representative known as the parent, or root. The
-   following implements two well-known optimizations known as union-by-size and
-   path compression. This version is simplified to only work on integer elements.
-
-   - find_set(u) returns the unique representative of the partition containing u.
-   - same_set(u, v) returns whether elements u and v belong to the same partition.
-   - union_set(u, v) replaces the partitions containing u and v with a single new
-   partition consisting of the union of elements in the original partitions.
-
-   Time Complexity:
-   - O(a(n)) per call to find_set(), same_set(), and union_set(), where n is the
-   number of elements, and a(n) is the extremely slow growing inverse of the Ackermann function
-   (effectively a very small constant for all practical values of n).
-
-   Space Complexity:
-   - O(n) for storage of the disjoint set forest elements.
-   - O(1) auxiliary for all operations.
-**/
-
 class UnionFind {
   vector <int> par;
   vector <int> siz;
@@ -94,4 +73,29 @@ public:
     return ret;
   }
 };
+
+int n, m, u, v, w;
+vector < tuple <int, int, int> > edges;
+UnionFind uf;
+
+pair < ll, vector < pair <int, int> > > Kruskal() {
+  sort(edges.begin(), edges.end());
+
+  vector < pair <int, int> > mstEdges;
+  int from, to, cost;
+  ll minWieght = 0;
+
+  for(tuple <int, int, int> edge : edges) {
+    tie(cost, from, to) = edge;
+    if(uf.union_set(from, to)) {
+      minWieght += cost;
+      mstEdges.push_back(make_pair(from, to));
+    }
+  }
+
+  if(mstEdges.size() == n - 1)
+    return make_pair(minWieght, mstEdges);
+
+  return make_pair(-1, vector < pair <int, int> > ());
+}
 

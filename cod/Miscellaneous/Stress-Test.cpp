@@ -1,3 +1,26 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define endl '\n'
+
+using i128 = __int128_t;
+using i64 = int64_t;
+using i32 = int32_t;
+using i16 = int16_t;
+using i8 = int8_t;
+
+using u128 = __uint128_t;
+using u64 = uint64_t;
+using u32 = uint32_t;
+using u16 = uint16_t;
+using u8 = uint8_t;
+
+void fast() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+}
+
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 /** 64-bit signed int Generator
@@ -70,7 +93,7 @@ i32 main (i32 arg, char* args[]) {
       cerr << "Wrong Answer" << endl;
       break;
     } else if (tc == limit) {
-      cout << "Accepted" << endl;
+      cout << "Accepted insha'a Allah" << endl;
     }
   }
 }

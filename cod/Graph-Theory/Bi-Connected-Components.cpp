@@ -1,4 +1,11 @@
-int Head[N], Next[M], To[M], Par[N], dfs_num[N], dfs_low[N], ne, n, m, u, v, root, rootChildren, dfs_timer, Stack[N], top, ID;
+const int N = 1e5 + 9, M = 2e5 + 9, oo = 0x3f3f3f3f, Mod = 1e9 + 7;
+const ll INF = 0x3f3f3f3f3f3f3f3f;
+
+int Head[N], Next[M], To[M];
+int Par[N], dfs_num[N], dfs_low[N];
+int ne, n, m, u, v;
+int root, rootChildren, dfs_timer;
+int Stack[N], top, ID;
 bool Art[N];
 vector < vector <int> > BiCCs(N), BiCCIDs(N);
 
@@ -17,41 +24,48 @@ void _clear() {
   BiCCs = BiCCIDs = vector < vector <int> > (N);
 }
 
-void Tarjan(int node)
-{
+void Tarjan(int node) {
   dfs_num[node] = dfs_low[node] = ++dfs_timer;
   Stack[top++] = node;
 
   for(int i = Head[node]; i; i = Next[i]) {
     if(dfs_num[To[i]] == 0) {
       if(node == root) ++rootChildren;
+
       Par[To[i]] = node;
       Tarjan(To[i]);
 
       dfs_low[node] = Min(dfs_low[node], dfs_low[To[i]]);
-      if(dfs_low[To[i]] >= dfs_num[node])
-	{
-	  Art[node] = true;
-	  ++ID;
-	  for(int x = -1; x ^ To[i];)
-	    {
-	      x = Stack[--top];
-	      BiCCIDs[x].emplace_back(ID);
-	      BiCCs[ID].emplace_back(x);
-	    }
-	  BiCCIDs[node].emplace_back(ID);
-	  BiCCs[ID].emplace_back(node);
+
+      if(dfs_low[To[i]] >= dfs_num[node]) {
+	Art[node] = true;
+	++ID;
+	for(int x = -1; x ^ To[i];) {
+	  x = Stack[--top];
+	  BiCCIDs[x].emplace_back(ID);
+	  BiCCs[ID].emplace_back(x);
 	}
+	BiCCIDs[node].emplace_back(ID);
+	BiCCs[ID].emplace_back(node);
+      }
     }
     else if(To[i] != Par[node])
       dfs_low[node] = Min(dfs_low[node], dfs_num[To[i]]);
   }
 }
 
-int main()
-{
+int main() {
+  cin >> n >> m;
+  _clear();
+
+  while(m--) {
+    cin >> u >> v;
+    addEdge(u, v);
+    addEdge(v, u);
+  }
+
   for(int i = 1; i <= n; ++i)
-    if(dfs_num[i] == 0) {
+    if(dfs_num[i] == 0) { // O(n + m)
       root = i;
       rootChildren = 0;
       Tarjan(i);

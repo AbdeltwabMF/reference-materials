@@ -18,11 +18,10 @@ void engage(int man, int woman) {
     Q.push(exWife);
 }
 
-void Solve()
-{
+void Solve() {
   _clear();
-
   cin >> n;
+
   for(int i = 1; i <= n; ++i)
     for(int j = 1; j <= n; ++j)
       cin >> pref[i][j];
@@ -37,33 +36,16 @@ void Solve()
     Q.push(i);
 
   int man, woman;
-  while(Q.size())
-    {
-      woman = Q.front(); Q.pop();
-      man = pref[woman][++Next[woman]];
+  while(Q.size()) {
+    woman = Q.front(); Q.pop();
+    man = pref[woman][++Next[woman]];
 
-      if(!wife[man] || order[man][woman] < order[man][wife[man]])
-	engage(man, woman);
-      else
-	Q.push(woman);
-    }
+    if(!wife[man] || order[man][woman] < order[man][wife[man]])
+      engage(man, woman);
+    else
+      Q.push(woman);
+  }
 
   for(int i = 1; i <= n; ++i)
     cout << husband[i] << endl;
 }
-
-/**
-   1
-   3
-   3 2 1
-   2 1 3
-   2 1 3
-   3 1 2
-   1 2 3
-   2 3 1
-   -----
-   3
-   2
-   1
-**/
-

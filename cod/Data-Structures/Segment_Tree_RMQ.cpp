@@ -1,6 +1,12 @@
+/** resources:
+    1. https://codeforces.com/blog/entry/15729
+    2. https://codeforces.com/blog/entry/15890
+    3. https://codeforces.com/blog/entry/18051
+    4. https://www.hackerearth.com/practice/data-structures/advanced-data-structures/segment-trees/practice-problems/algorithm/range-minimum-query/description/
+**/
+
 template <class T, class F = function <T(const T &, const T &)> >
-class SegmentTree
-{
+class SegmentTree {
   vector <T> _A;
   vector <T> ST;
   vector <T> LT;
@@ -9,8 +15,7 @@ class SegmentTree
 
 public :
   template <class iter>
-  SegmentTree(iter _begin, iter _end, const F _func = [](T a, T b) {return a <= b ? a : b;}) : func(_func)
-  {
+  SegmentTree(iter _begin, iter _end, const F _func = [](T a, T b) {return a <= b ? a : b;}) : func(_func) {
     _N = distance(_begin, _end);
     _N = (1 << (int)ceil(log2(_N)));
 
@@ -25,8 +30,7 @@ public :
     build(1, 1, _N);
   }
 
-  void build(int p, int l, int r)
-  {
+  void build(int p, int l, int r) {
     if(l == r) {
       ST[p] = _A[l];
       return;
@@ -51,8 +55,7 @@ public :
     return query(ql, qr, 1, 1, _N);
   }
 
-  void update_point(int inx, int delta)
-  {
+  void update_point(int inx, int delta) {
     inx += _N - 1;
     ST[inx] = delta;
 
@@ -67,8 +70,7 @@ public :
   }
 
 private :
-  void update_range(int ul, int ur, int delta, int p, int l, int r)
-  {
+  void update_range(int ul, int ur, int delta, int p, int l, int r) {
     if(r < ul || ur < l)
       return;
 
@@ -91,8 +93,7 @@ private :
     ST[p] = func(x, y);
   }
 
-  T query(int ql, int qr, int p, int l, int r)
-  {
+  T query(int ql, int qr, int p, int l, int r) {
     if(r < ql || qr < l)
       return INT_MAX;
 

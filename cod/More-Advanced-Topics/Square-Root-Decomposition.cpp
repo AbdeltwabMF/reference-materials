@@ -5,8 +5,7 @@ const int BLK = 256;
 int n, q, a[N], type, x, y, z;
 vector <int> bs[M];
 
-int query(int l, int r, int val)
-{
+int query(int l, int r, int val) {
   int cur_l = l / BLK;
   int cur_r = r / BLK;
   int ans = 0;
@@ -25,8 +24,7 @@ int query(int l, int r, int val)
   return ans;
 }
 
-void build()
-{
+void build() {
   for(int i = 0; i < n; ++i)
     bs[i / BLK].emplace_back(a[i]);
 
@@ -34,31 +32,27 @@ void build()
     sort(bs[i].begin(), bs[i].end());
 }
 
-void update(int id, int delta)
-{
+void update(int id, int delta) {
   int pos = lower_bound(bs[id / BLK].begin(), bs[id / BLK].end(), a[id]) - bs[id / BLK].begin();
   bs[id / BLK][pos] = delta;
   sort(bs[id / BLK].begin(), bs[id / BLK].end());
   a[id] = delta;
 }
 
-void Solve()
-{
+void Solve() {
   cin >> n;
   for(int i = 1; i <= n; ++i) cin >> a[i];
 
   build();
-
   cin >> q;
-  while(q--)
-    {
-      cin >> type >> x >> y;
-      if(type == 0)
-        {
-	  cin >> z;
-	  cout << query(x, y, z) << endl;
-        }
-      else
-	update(x, y);
+  while(q--) {
+    cin >> type >> x >> y;
+    if(type == 0) {
+      cin >> z;
+      cout << query(x, y, z) << endl;
     }
+    else
+      update(x, y);
+  }
 }
+

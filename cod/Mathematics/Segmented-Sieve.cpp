@@ -1,3 +1,17 @@
+/**
+   constraints:
+   1 <= l, r <= 1e{14}
+   1 <= r - l + 1 <= 1e7
+   2 <= x <= 1e7
+
+   Time complexity:
+   segmented_sieve takes O((r - l + 1) * ln(ln(r)))
+   linear_sieve takes O(n)
+
+   Space Complexity:
+   O(2 * MaxN + n / (ln(n) - 1.08))
+**/
+
 int lp[N];
 int Primes[664580], pnx; /** size of Primes = n / (ln(n) - 1.08) */
 bool isPrime[N];

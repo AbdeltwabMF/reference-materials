@@ -1,5 +1,14 @@
-int HeadDAG[N], ToDAG[M], NextDAG[M], CostDAG[M], neDAG, Head[N], To[M], Next[M], Cost[M], dfs_num[N], dfs_low[N], out[N], Stack[N], compID[N], compSize[N], ne, n, m, u, v, w. dfs_timer, top, ID;
+const int N = 1e5 + 9, M = 2e6 + 9, oo = 0x3f3f3f3f, Mod = 1e9 + 7;
+ll INF = 0x3f3f3f3f3f3f3f3f;
+
+int Head[N], To[M], Next[M], Cost[M];
+int dfs_num[N], dfs_low[N], out[N];
+int Stack[N], compID[N], compSize[N];
+int ne, n, m, u, v, w;
+int dfs_timer, top, ID;
 bool in_stack[N];
+
+int HeadDAG[N], ToDAG[M], NextDAG[M], CostDAG[M], neDAG;
 
 void addEdge(int from, int to, int cost = 0) {
   Next[++ne] = Head[from];
@@ -26,8 +35,7 @@ void _clear() {
   ne = dfs_timer = top = neDAG = ID = 0;
 }
 
-void Tarjan(int node)
-{
+void Tarjan(int node) {
   dfs_num[node] = dfs_low[node] = ++dfs_timer;
   in_stack[Stack[top++] = node] = true;
 
@@ -55,15 +63,15 @@ void Tarjan() {
       Tarjan(i);
 }
 
-void DFS(int node)
-{
+void DFS(int node) {
   dfs_num[node] = 1;
   for(int i = Head[node]; i; i = Next[i]) {
-      if(compID[node] != compID[To[i]])
-	addEdgeDAG(compID[node], compID[To[i]]);
-      if(dfs_num[To[i]] == 0)
-	DFS(To[i]);
-    }
+    if(compID[node] != compID[To[i]])
+      addEdgeDAG(compID[node], compID[To[i]]);
+
+    if(dfs_num[To[i]] == 0)
+      DFS(To[i]);
+  }
 }
 
 void construct_dag() {

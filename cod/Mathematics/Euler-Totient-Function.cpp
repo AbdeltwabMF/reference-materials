@@ -1,3 +1,33 @@
+/**
+    Constraints:
+    1 <= n <= 1e7
+    2 <= a <= 10^{14}
+
+    Time Complexity:
+    linear_sieve takes O(n)
+    Phi takes O(n / (ln(n) - 1.08))
+
+    Space Complexity:
+    O(MaxN + n / (ln(n) - 1.08))
+
+    Explanation:
+    Phi(n) = n * ((p1 - 1) / p1) * ((p2 - 1) / p2) *...* ((pk - 1) / pk)
+    Phi(n) = n * (1 - (1 / p1)) * (1 - (1 / p2)) *...* (1 - (1 / pk))
+
+    Applications:
+    Eulers theorem:
+    a^phi(m) cong 1 (mod m) if a and m are relatively prime.
+
+    Fermats little theorem:
+    when m is a prime:
+    a^{m minus 1} cong 1 (mod m)
+
+    As immediate consequence we also get the equivalence:
+    a^n cong a^{n mod phi(m)} (mod m)
+    This allows computing x^n mod m for very big n, especially if n is the result of another computation,
+    as it allows to compute n under a modulo.
+**/
+
 int lp[N], Primes[664580], pnx; /** size of Primes = n / (ln(n) - 1.08) */
 
 void linear_sieve(int n) {

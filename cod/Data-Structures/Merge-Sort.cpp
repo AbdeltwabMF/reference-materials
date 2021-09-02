@@ -1,8 +1,21 @@
+/**
+   Time Complexity: Sorting arrays on different machines. Merge Sort is a recursive algorithm and time complexity can be expressed as following recurrence relation.
+
+  T(n) = 2T(n/2) + theta(n)
+
+   The above recurrence can be solved either using the Recurrence Tree method or the Master method. It falls in case II of Master Method and the solution of the recurrence is theta(nLogn). Time complexity of Merge Sort is  theta(nLogn) in all 3 cases (worst, average and best) as merge sort always divides the array into two halves and takes linear time to merge two halves.
+   Auxiliary Space: O(n)
+   Algorithmic Paradigm: Divide and Conquer
+   Sorting In Place: No in a typical implementation
+   Count Inversion of array: yes
+   https://discuss.codechef.com/t/iiti15-editorial/4427
+   Stable: Yes
+**/
+
 ll inversions;
 
 template <class T>
-void merge(T localArr [], int l, int mid, int r)
-{
+void merge(T localArr [], int l, int mid, int r) {
   int l_size = mid - l + 1;
   int r_size = r - mid;
 
@@ -26,8 +39,7 @@ void merge(T localArr [], int l, int mid, int r)
 }
 
 template <class T>
-void merge_sort(T localArr [], int l, int r)
-{
+void merge_sort(T localArr [], int l, int r) {
   if(r - l)
     {
       int mid = (l + r) >> 1;
@@ -38,8 +50,7 @@ void merge_sort(T localArr [], int l, int r)
 }
 
 template <class T>
-void merge_sort(T _begin, T _end)
-{
+void merge_sort(T _begin, T _end) {
   const int sz = _end - _begin;
   __typeof(*_begin) localArray[sz];
 
@@ -53,4 +64,3 @@ void merge_sort(T _begin, T _end)
   for(int i = 0; k != _end; ++i, ++k)
     *k = localArray[i];
 }
-

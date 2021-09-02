@@ -19,12 +19,17 @@ bool FloodFill(int r, int c) {
 
   grid[r][c] = '#';
   for(int i = 0; i < 4; ++i)
-    if(FloodFill(r + dr[i], c + dc[i])) return true;
-
+    if(FloodFill(r + dr[i], c + dc[i]))
+      return true;
   return false;
 }
 
 int main() {
+  cin >> n >> m;
+  for(int i = 0; i < n; ++i)
+    for(int j = 0; j < m; ++j)
+      cin >> grid[i][j];
+
   cout << (FloodFill(0, 0) ? "YES" : "NO") << endl;
 }
 
