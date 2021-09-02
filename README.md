@@ -1,4 +1,4 @@
 # ICPC Team Reference Material
 
 ## Preview
-![](Preview)
+![](Preview.png)
